@@ -2,7 +2,7 @@ var ws = new WebSocket('ws://localhost:8080/echo');
 ws.onmessage = function (msg) {
     var li = createLIFromWSMessage(msg);
     var logOutlet = document.querySelector('.log-outlet')
-    logOutlet.append(li)
+    logOutlet.insertBefore(li, logOutlet.firstChild)
 }
 
 function sendQuery(query) {
@@ -21,7 +21,7 @@ function createLIFromWSMessage(msg) {
     var li = document.createElement('li');
     li.style.listStyle = "none";
     li.style.fontSize = 'larger';
-    li.innerHTML = (msg.data || "");
+    li.innerHTML = (msg.data.replace(/ERROR/, "<b style='color: red'>ERROR</b>") || "");
     return li;
 }
 
